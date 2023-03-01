@@ -1,7 +1,7 @@
 export default function Sudoku() {
   this.grid = [  
-    [0, 3, 4, 6, 7, 8, 9, 1, 2],
-    [6, 7, 2, 1, 9, 5, 3, 4, 8],
+    [5, 3, 4, 6, 7, 8, 9, 1, 2],
+    [6, 7, 2, 1, 9, 0, 3, 4, 8],
     [1, 9, 8, 3, 4, 2, 5, 6, 7],
     [8, 5, 9, 7, 6, 1, 4, 2, 3],
     [4, 2, 6, 8, 5, 3, 7, 9, 1],
@@ -32,19 +32,23 @@ export default function Sudoku() {
     return valid;
   };
   this.checkColumns = function () {
-  for (let colIndex = 0; colIndex < 9; colIndex++) {
-    const colValues = new Set();
-    for (let rowIndex = 0; rowIndex < 9; rowIndex++) {
-      const value = this.grid[rowIndex][colIndex];
-      if(value < 1 || value > 9 || colValues.has(value)) {
-        return false;
-      } else {
-        colValues.add(value);
+    let valid = true;
+    for (let colIndex = 0; colIndex < 9; colIndex++) {
+      const colValues = new Set();
+      let colIsValid = true;
+      for (let rowIndex = 0; rowIndex < 9; rowIndex++) {
+        const value = this.grid[rowIndex][colIndex];
+        if (value < 1 || value > 9 || colValues.has(value)) {
+          colIsValid = false;
+        } else {
+          colValues.add(value);
+        }
       }
-      }  
+      if (!colIsValid) {
+        valid = false;
+      }
     }
-
-
+    return valid;
   }
   };
 
