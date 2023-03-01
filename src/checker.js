@@ -50,6 +50,32 @@ export default function Sudoku() {
     }
     return valid;
   }
+  this.checkSubGrids = function () {
+    let valid = true;
+    //Check each 3x3 subgrid
+    for(let i = 0; i < 9; i +=3) {
+      for(let j = 0; j < 9; j+= 3) {
+        const subGridValues = new Set();
+        let subGridIsValid = true;
+        //Check each cell in the subgrid
+        for(let x = i; x < i + 3; x++) {
+          for(let y = j; y < j + 3; y++) {
+            const value = this.grid[x][y];
+            if(value < 1 || value > 9 || subGridValues.has(value)) {
+              subGridIsValid = false;
+            } else {
+              subGridValues.add(value);
+            }
+
+          }
+        }
+        if (!subGridIsValid) {
+          valid = false;
+        }
+      }
+    } 
+    return valid;
+  }
   };
 
 // console.log(sudoku.checkRows()); 
